@@ -74,6 +74,7 @@ dependencies {
         exclude module: 'library-anti-distortion'
         //exclude module: 'fly-safe-database'
     })
+    implementation 'com.google.android.gms:play-services-maps:18.0.1'
     compileOnly 'com.dji:dji-sdk-provided:4.15'
 
     androidTestCompile('androidx.test.espresso:espresso-core:3.1.0', {
