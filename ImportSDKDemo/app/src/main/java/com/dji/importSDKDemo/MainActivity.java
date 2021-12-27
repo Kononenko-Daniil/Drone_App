@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,8 @@ import dji.sdk.base.BaseComponent;
 import dji.sdk.base.BaseProduct;
 import dji.sdk.sdkmanager.DJISDKInitEvent;
 import dji.sdk.sdkmanager.DJISDKManager;
+
+import android.view.View.OnClickListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,7 +70,22 @@ public class MainActivity extends AppCompatActivity {
 
         //Initialize DJI SDK Manager
         mHandler = new Handler(Looper.getMainLooper());
+    }
 
+    public void OnButtonCategoryClick(View view){
+        switch(view.getId()){
+            case R.id.go_fly_button:
+                showToast("go fly");
+                break;
+            case R.id.zones_map_button:
+                showToast("zones map");
+                break;
+            case R.id.about_app_button:
+                showToast("about app");
+                break;
+            default:
+                break;
+        }
     }
 
     /**

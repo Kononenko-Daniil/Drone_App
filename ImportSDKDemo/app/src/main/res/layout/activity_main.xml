@@ -29,7 +29,8 @@
         android:layout_marginTop="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_name_design"
-        app:srcCompat="@drawable/ic_go_fly" />
+        app:srcCompat="@drawable/ic_go_fly"
+        android:onClick="OnButtonCategoryClick"/>
 
     <ImageView
         android:id="@+id/zones_map_button"
@@ -39,7 +40,8 @@
         android:layout_marginEnd="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_name_design"
-        app:srcCompat="@drawable/ic_zones_map" />
+        app:srcCompat="@drawable/ic_zones_map"
+        android:onClick="OnButtonCategoryClick"/>
 
     <ImageView
         android:id="@+id/about_app_button"
@@ -50,7 +52,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_name_design"
         android:contentDescription="@string/about_app_desc"
-        app:srcCompat="@drawable/ic_about_app" />
+        app:srcCompat="@drawable/ic_about_app"
+        android:onClick="OnButtonCategoryClick"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
