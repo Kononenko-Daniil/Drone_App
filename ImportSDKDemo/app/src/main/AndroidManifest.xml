@@ -50,6 +50,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA3HwjRJbjLzfs8XtEDPIbzdbzd3qs9T2w"/>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
 
         <!-- DJI SDK -->
 
