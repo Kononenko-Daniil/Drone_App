@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
     private static BaseProduct mProduct;
     private Handler mHandler;
+    private Intent intent;
 
     private static final String[] REQUIRED_PERMISSION_LIST = new String[]{
             Manifest.permission.BLUETOOTH,
@@ -75,17 +76,19 @@ public class MainActivity extends AppCompatActivity {
     public void OnButtonCategoryClick(View view){
         switch(view.getId()){
             case R.id.go_fly_button:
-                showToast("go fly");
+                intent = new Intent(this, GoFlyActivity.class);
                 break;
             case R.id.zones_map_button:
-                showToast("zones map");
+                intent = new Intent(this, ZonesMapActivity.class);
                 break;
             case R.id.about_app_button:
-                showToast("about app");
+                intent = new Intent(this, AboutAppActivity.class);
                 break;
             default:
                 break;
         }
+
+        startActivity(intent);
     }
 
     /**
