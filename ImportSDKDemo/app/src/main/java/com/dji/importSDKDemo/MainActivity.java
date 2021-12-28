@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,12 +29,15 @@ import dji.sdk.base.BaseProduct;
 import dji.sdk.sdkmanager.DJISDKInitEvent;
 import dji.sdk.sdkmanager.DJISDKManager;
 
+import android.view.View.OnClickListener;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getName();
     public static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
     private static BaseProduct mProduct;
     private Handler mHandler;
+    private Intent intent;
 
     private static final String[] REQUIRED_PERMISSION_LIST = new String[]{
             Manifest.permission.BLUETOOTH,
@@ -66,7 +71,24 @@ public class MainActivity extends AppCompatActivity {
 
         //Initialize DJI SDK Manager
         mHandler = new Handler(Looper.getMainLooper());
+    }
 
+    public void OnButtonCategoryClick(View view){
+        switch(view.getId()){
+            case R.id.go_fly_button:
+                intent = new Intent(this, GoFlyActivity.class);
+                break;
+            case R.id.zones_map_button:
+                intent = new Intent(this, ZonesMapActivity.class);
+                break;
+            case R.id.about_app_button:
+                intent = new Intent(this, AboutAppActivity.class);
+                break;
+            default:
+                break;
+        }
+
+        startActivity(intent);
     }
 
     /**
