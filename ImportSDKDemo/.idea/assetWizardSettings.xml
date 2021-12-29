@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_about_app" />
-                            <entry key="sourceFile" value="D:\Daniil\SPC\Drawable\about_app.svg" />
+                            <entry key="outputName" value="ic_go_back_button" />
+                            <entry key="sourceFile" value="D:\Daniil\SPC\Drawable\go_back_button.svg" />
                           </map>
                         </option>
                       </PersistentState>
