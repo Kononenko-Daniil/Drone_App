@@ -8,4 +8,6 @@
         information about application</string>
 
     <string name="zones_map_category_name">ZONES MAP</string>
+    <string name="go_back_button_desc">Button for going back
+        on main page</string>
 </resources>
