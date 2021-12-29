@@ -36,7 +36,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConnectionActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".AboutAppActivity" />
         <activity android:name=".ZonesMapActivity" />
         <activity android:name=".GoFlyActivity" /> <!-- DJI SDK -->
@@ -55,7 +55,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" /> <!-- DJI SDK -->
         <activity
-            android:name=".MainActivity"
+            android:name=".ConnectionActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
