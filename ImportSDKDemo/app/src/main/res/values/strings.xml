@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">DroneApp</string>
-    <string name="app_name_design">Drone App</string>
-
+    <string name="app_name_design">DRONE APP</string>
     <string name="go_fly_desc">Button for going fly</string>
     <string name="zones_map_desc">Button for opening google
         map with specific zones</string>
     <string name="about_app_desc">Button for opening page with
         information about application</string>
+
+    <string name="zones_map_category_name">ZONES MAP</string>
 </resources>

@@ -6,4 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ZonesMapActivity">
 
+    <TextView
+        android:id="@+id/zones_map_category_name"
+        android:layout_width="181dp"
+        android:layout_height="123dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="96dp"
+        android:fontFamily="@font/montserrat_alternates"
+        android:gravity="center"
+        android:text="@string/zones_map_category_name"
+        android:textColor="#000000"
+        android:textSize="45dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
