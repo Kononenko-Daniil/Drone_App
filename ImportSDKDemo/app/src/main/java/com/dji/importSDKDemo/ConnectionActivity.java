@@ -15,10 +15,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import dji.common.error.DJIError;
@@ -34,6 +37,7 @@ public class ConnectionActivity extends AppCompatActivity {
     private static BaseProduct mProduct;
     private Handler mHandler;
     private Intent intent;
+    private Timer timer;
 
     private static final String[] REQUIRED_PERMISSION_LIST = new String[]{
             Manifest.permission.BLUETOOTH,
@@ -67,6 +71,18 @@ public class ConnectionActivity extends AppCompatActivity {
 
         //Initialize DJI SDK Manager
         mHandler = new Handler(Looper.getMainLooper());
+        startMainActivity();
+        timer = new Timer();
+
+    }
+
+    public void startMainActivity(){
+        timer = new Timer();
+        CustomTimerTask customTimerTask = new CustomTimerTask();
+        timer.schedule(customTimerTask, 4000);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     /**
