@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.zones_map_button:
                 intent = new Intent(this, ZonesMapActivity.class);
                 break;
-            case R.id.about_app_button:
-                intent = new Intent(this, AboutAppActivity.class);
-                break;
             default:
                 break;
         }
