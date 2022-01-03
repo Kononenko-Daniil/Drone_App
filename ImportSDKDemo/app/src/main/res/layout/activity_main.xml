@@ -44,17 +44,5 @@
         app:layout_constraintTop_toBottomOf="@+id/app_name_design"
         app:srcCompat="@drawable/ic_zones_map" />
 
-    <ImageView
-        android:id="@+id/about_app_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="224dp"
-        android:contentDescription="@string/about_app_desc"
-        android:onClick="OnButtonCategoryClick"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_name_design"
-        app:srcCompat="@drawable/ic_about_app" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
