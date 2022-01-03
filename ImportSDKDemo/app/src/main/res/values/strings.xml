@@ -10,4 +10,5 @@
     <string name="zones_map_category_name">ZONES MAP</string>
     <string name="go_back_button_desc">Button for going back
         on main page</string>
+    <string name="connection_page_go_home">Home</string>
 </resources>
