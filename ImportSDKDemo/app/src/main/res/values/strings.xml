@@ -8,4 +8,7 @@
     <string name="go_back_button_desc">Button for going back
         on main page</string>
     <string name="connection_page_go_home">Home</string>
+    <string name="development_text">Sorry! This page is
+        in development.</string>
+    <string name="go_fly_age_name">GO FLY</string>
 </resources>
