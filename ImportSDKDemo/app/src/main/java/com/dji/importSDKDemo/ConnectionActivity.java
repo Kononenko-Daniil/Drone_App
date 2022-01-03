@@ -76,7 +76,9 @@ public class ConnectionActivity extends AppCompatActivity {
 
     public void onGoHomeClick(View view){
         if(readyToWork){
-            Intent intent = new Intent(this, MainActivity.class);
+            intent = new Intent(this, DroneGPSTrackingService.class);
+            startService(intent);
+            intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }else{
             attentionText = (TextView)findViewById(R.id.attention_text);
