@@ -37,7 +37,8 @@ public class ConnectionActivity extends AppCompatActivity {
     private static BaseProduct mProduct;
     private Handler mHandler;
     private Intent intent;
-    private Timer timer;
+    private boolean readyToWork;
+    private TextView attentionText;
 
     private static final String[] REQUIRED_PERMISSION_LIST = new String[]{
             Manifest.permission.BLUETOOTH,
@@ -71,18 +72,16 @@ public class ConnectionActivity extends AppCompatActivity {
 
         //Initialize DJI SDK Manager
         mHandler = new Handler(Looper.getMainLooper());
-        startMainActivity();
-        timer = new Timer();
-
     }
 
-    public void startMainActivity(){
-        timer = new Timer();
-        CustomTimerTask customTimerTask = new CustomTimerTask();
-        timer.schedule(customTimerTask, 4000);
-
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    public void onGoHomeClick(View view){
+        if(readyToWork){
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }else{
+            attentionText = (TextView)findViewById(R.id.attention_text);
+            attentionText.setText("Wait until registration");
+        }
     }
 
     /**
@@ -143,6 +142,7 @@ public class ConnectionActivity extends AppCompatActivity {
                         @Override
                         public void onRegister(DJIError djiError) {
                             if (djiError == DJISDKError.REGISTRATION_SUCCESS) {
+                                readyToWork = true;
                                 showToast("Register Success");
                                 DJISDKManager.getInstance().startConnectionToProduct();
                             } else {
