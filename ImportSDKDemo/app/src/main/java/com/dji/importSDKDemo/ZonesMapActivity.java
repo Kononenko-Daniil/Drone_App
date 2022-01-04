@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,11 +18,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.maps.android.PolyUtil;
+
+import java.util.List;
 
 import dji.common.flightcontroller.FlightControllerState;
 import dji.internal.camera.La;
@@ -35,6 +41,8 @@ public class ZonesMapActivity extends AppCompatActivity implements OnMapReadyCal
     private double droneLocationLat = 181, droneLocationLng = 181;
     private Marker droneMarker = null;
     private FlightController mFlightController;
+    private Polygon polygon;
+    private Circle circle;
 
     @Override
     protected void onDestroy(){
@@ -113,7 +121,16 @@ public class ZonesMapActivity extends AppCompatActivity implements OnMapReadyCal
                 }
 
                 if (checkGpsCoordinates(droneLocationLat, droneLocationLng)) {
+
                     droneMarker = gMap.addMarker(markerOptions);
+                    boolean con = PolyUtil.containsLocation(new LatLng(droneLocationLat, droneLocationLng),
+                            polygon.getPoints(), false);
+                    String c = new Boolean(con).toString();
+                    if(con){
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                c, Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
                 }
             }
         });
@@ -130,12 +147,18 @@ public class ZonesMapActivity extends AppCompatActivity implements OnMapReadyCal
             gMap = googleMap;
         }
 
-        Polygon polygon1 = googleMap.addPolygon(new PolygonOptions()
+        polygon = googleMap.addPolygon(new PolygonOptions()
                 .clickable(true)
-                .add(
-                        new LatLng(-27.457, 153.040),
+                .add(new LatLng(-27.457, 153.040),
                         new LatLng(-33.852, 151.211),
                         new LatLng(-37.813, 144.962),
                         new LatLng(-34.928, 138.599)));
+
+        circle = gMap.addCircle(new CircleOptions()
+                .center(new LatLng(52.040494, 29.251288))
+                .radius(300)
+                .strokeWidth(10)
+                .strokeColor(Color.GREEN)
+                .fillColor(Color.argb(128, 255, 0, 0)));
     }
 }
