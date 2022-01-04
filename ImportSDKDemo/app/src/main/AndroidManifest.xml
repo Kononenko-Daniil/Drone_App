@@ -39,7 +39,6 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".MainActivity" />
-        <activity android:name=".ZonesMapActivity" />
         <activity android:name=".GoFlyActivity" /> <!-- DJI SDK -->
         <uses-library android:name="com.android.future.usb.accessory" />
         <uses-library

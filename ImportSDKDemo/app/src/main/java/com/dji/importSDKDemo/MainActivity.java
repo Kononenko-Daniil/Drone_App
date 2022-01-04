@@ -165,9 +165,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             case R.id.go_fly_button:
                 intent = new Intent(this, GoFlyActivity.class);
                 break;
-            case R.id.zones_map_button:
-                intent = new Intent(this, ZonesMapActivity.class);
-                break;
             default:
                 break;
         }
