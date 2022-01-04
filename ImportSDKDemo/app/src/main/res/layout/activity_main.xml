@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.dji.importSDKDemo.MainActivity"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context="com.dji.importSDKDemo.MainActivity">
 
     <TextView
         android:id="@+id/app_name_design"
@@ -28,23 +27,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="32dp"
-        android:onClick="OnButtonCategoryClick"
+        android:onClick="OnButtonClick"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_name_design"
         app:srcCompat="@drawable/ic_go_fly" />
 
-    <ImageView
-        android:id="@+id/zones_map_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="40dp"
-        android:onClick="OnButtonCategoryClick"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_name_design"
-        app:srcCompat="@drawable/ic_zones_map" />
-
     <androidx.cardview.widget.CardView
+        android:id="@+id/map_card"
         android:layout_width="278dp"
         android:layout_height="251dp"
         android:layout_gravity="center_horizontal|center_vertical"
