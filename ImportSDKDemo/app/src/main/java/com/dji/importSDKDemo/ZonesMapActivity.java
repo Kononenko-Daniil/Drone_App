@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +20,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 
 import dji.common.flightcontroller.FlightControllerState;
 import dji.internal.camera.La;
@@ -126,5 +129,13 @@ public class ZonesMapActivity extends AppCompatActivity implements OnMapReadyCal
         if(gMap == null){
             gMap = googleMap;
         }
+
+        Polygon polygon1 = googleMap.addPolygon(new PolygonOptions()
+                .clickable(true)
+                .add(
+                        new LatLng(-27.457, 153.040),
+                        new LatLng(-33.852, 151.211),
+                        new LatLng(-37.813, 144.962),
+                        new LatLng(-34.928, 138.599)));
     }
 }
