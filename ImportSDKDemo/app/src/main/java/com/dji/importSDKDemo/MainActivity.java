@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.dji.importSDKDemo.zones_management.Zone;
+import com.dji.importSDKDemo.zones_management.ZoneManager;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private FlightController mFlightController;
     private Polygon polygon;
     private Circle circle;
+    private ZoneManager zoneManager;
+    private Zone[] zones;
 
     @Override
     protected void onDestroy(){
@@ -99,12 +103,30 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
     }
 
-    public static boolean checkGpsCoordinates(double latitude, double longitude) {
+    public static boolean validDroneGPSCoordinates(double latitude, double longitude) {
         return (latitude > -90 && latitude < 90 && longitude > -180 && longitude < 180) && (latitude != 0f && longitude != 0f);
     }
 
-    private void updateDroneLocation(){
+    public void checkDroneGPSCoordinates(LatLng droneLocation){
+        boolean inZone = false;
 
+        for(Zone zone : zoneManager.zones){
+            if(!zone.InZone){
+                inZone = PolyUtil.containsLocation(droneLocation,
+                        zone.ZonePolygon.getPoints(), false);
+                if(inZone){
+                    zone.InZone = true;
+                    String inZoneMessage = "Drone is in zone";
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            inZoneMessage, Toast.LENGTH_SHORT);
+                    toast.show();
+                    break;
+                }
+            }
+        }
+    }
+
+    private void updateDroneLocation(){
         LatLng pos = new LatLng(droneLocationLat, droneLocationLng);
         //Create MarkerOptions object
         final MarkerOptions markerOptions = new MarkerOptions();
@@ -118,25 +140,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     droneMarker.remove();
                 }
 
-                if (checkGpsCoordinates(droneLocationLat, droneLocationLng)) {
-
+                if (validDroneGPSCoordinates(droneLocationLat, droneLocationLng)) {
                     droneMarker = gMap.addMarker(markerOptions);
-                    boolean con = PolyUtil.containsLocation(new LatLng(droneLocationLat, droneLocationLng),
-                            polygon.getPoints(), false);
-                    String c = new Boolean(con).toString();
-                    if(con){
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                c, Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
+                    LatLng droneLocation = new LatLng(droneLocationLat, droneLocationLng);
+                    checkDroneGPSCoordinates(droneLocation);
                 }
             }
         });
-    }
-
-    public void onBackClick(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -144,20 +154,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(gMap == null){
             gMap = googleMap;
         }
-
-        polygon = googleMap.addPolygon(new PolygonOptions()
-                .clickable(true)
-                .add(new LatLng(-27.457, 153.040),
-                        new LatLng(-33.852, 151.211),
-                        new LatLng(-37.813, 144.962),
-                        new LatLng(-34.928, 138.599)));
-
-        circle = gMap.addCircle(new CircleOptions()
-                .center(new LatLng(52.040494, 29.251288))
-                .radius(300)
-                .strokeWidth(10)
-                .strokeColor(Color.GREEN)
-                .fillColor(Color.argb(128, 255, 0, 0)));
+        zoneManager = new ZoneManager(gMap);
+        zoneManager.setZonesArray();
+        zoneManager.setZoneStyle();
     }
 
     public void OnButtonClick(View view){
