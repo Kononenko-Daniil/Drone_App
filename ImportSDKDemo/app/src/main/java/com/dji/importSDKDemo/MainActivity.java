@@ -4,11 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +32,10 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.maps.android.PolyUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import dji.common.flightcontroller.FlightControllerState;
 import dji.sdk.base.BaseProduct;
 import dji.sdk.flightcontroller.FlightController;
@@ -45,11 +52,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Circle circle;
     private ZoneManager zoneManager;
     private Zone[] zones;
+    private SQLiteDatabase db;
 
     @Override
     protected void onDestroy(){
         super.onDestroy();
         unregisterReceiver(mReceiver);
+        db.close();
     }
 
     @Override
@@ -64,6 +73,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.zones_map);
         mapFragment.getMapAsync(this);
+
+        db = getBaseContext().openOrCreateDatabase("droneApp.db", MODE_PRIVATE, null);
+        db.execSQL("CREATE TABLE IF NOT EXISTS violations (zoneType TEXT, " +
+                "zoneNumber TEXT, " +
+                "date TEXT, " +
+                "time Text)");
 
         mHandler = new Handler(Looper.getMainLooper());
     }
@@ -120,10 +135,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Toast toast = Toast.makeText(getApplicationContext(),
                             inZoneMessage, Toast.LENGTH_SHORT);
                     toast.show();
+                    registerViolation(zone.Type, zone.Number);
                     break;
                 }
             }
         }
+    }
+
+    public void registerViolation(String zoneType, String zoneNumber){
+        String violationDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
+        String violationTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
+
+        db.execSQL("INSERT OR IGNORE INTO violations VALUES ('" +
+                zoneType + "', '" +
+                zoneNumber + "', '" +
+                violationDate + "', '" +
+                violationTime + "')");
     }
 
     private void updateDroneLocation(){
