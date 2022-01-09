@@ -2,9 +2,12 @@ package com.dji.importSDKDemo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,5 +60,10 @@ public class ViewViolationsActivity extends AppCompatActivity {
         }else{
             violationsView.setText("You don`t have any violations");
         }
+    }
+
+    public void onBackClick(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

@@ -10,5 +10,6 @@
     <string name="connection_page_go_home">Home</string>
     <string name="development_text">Sorry! This page is
         in development.</string>
-    <string name="go_fly_age_name">GO FLY</string>
+    <string name="go_fly_page_name">GO FLY</string>
+    <string name="view_violations_page_name">VIOLATIONS</string>
 </resources>
