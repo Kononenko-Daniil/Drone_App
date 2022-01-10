@@ -52,5 +52,16 @@
 
     </androidx.cardview.widget.CardView>
 
+    <Button
+        android:id="@+id/view_violations_button"
+        android:layout_width="119dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginTop="200dp"
+        android:text="VIOLATIONS"
+        android:onClick="OnButtonClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
