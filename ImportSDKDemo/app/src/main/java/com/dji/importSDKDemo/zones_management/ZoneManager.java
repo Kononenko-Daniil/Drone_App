@@ -4,13 +4,10 @@ import android.graphics.Color;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
-import java.util.Collection;
-
 public class ZoneManager {
-    public Zone[] zones;
+    public ZonePolygon[] zonesPolygon;
     public GoogleMap googleMap;
 
     public ZoneManager(GoogleMap googleMap){
@@ -19,8 +16,8 @@ public class ZoneManager {
     }
 
     public void setZonesArray(){
-        zones = new Zone[]{
-                new Zone(
+        zonesPolygon = new ZonePolygon[]{
+                new ZonePolygon(
                         googleMap.addPolygon(new PolygonOptions()
                                 .add(new LatLng(52.040351,29.250383),
                                         new LatLng(52.041945,29.250313),
@@ -29,7 +26,7 @@ public class ZoneManager {
                         "GREY",
                         "1",
                         false),
-                new Zone(
+                new ZonePolygon(
                         googleMap.addPolygon(new PolygonOptions()
                                 .add(new LatLng(52.040387,29.253845),
                                         new LatLng(52.041621,  29.254344),
@@ -44,8 +41,8 @@ public class ZoneManager {
         int fillColor = 0;
         int strokeColor = 0;
         float strokeWidth = 3;
-        for(Zone zone : zones){
-            switch(zone.Type){
+        for(ZonePolygon zonePolygon : zonesPolygon){
+            switch(zonePolygon.Type){
                 case "RED":
                     fillColor = Color.argb(80, 255, 0, 0);
                     strokeColor = Color.argb(220, 255, 0, 0);
@@ -65,9 +62,9 @@ public class ZoneManager {
                 default:
                     break;
             }
-            zone.ZonePolygon.setFillColor(fillColor);
-            zone.ZonePolygon.setStrokeColor(strokeColor);
-            zone.ZonePolygon.setStrokeWidth(strokeWidth);
+            zonePolygon.ZonePolygon.setFillColor(fillColor);
+            zonePolygon.ZonePolygon.setStrokeColor(strokeColor);
+            zonePolygon.ZonePolygon.setStrokeWidth(strokeWidth);
         }
     }
 }

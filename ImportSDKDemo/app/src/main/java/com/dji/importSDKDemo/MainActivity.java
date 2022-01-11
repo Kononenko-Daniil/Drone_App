@@ -4,32 +4,26 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
-import com.dji.importSDKDemo.zones_management.Zone;
+import com.dji.importSDKDemo.zones_management.ZonePolygon;
 import com.dji.importSDKDemo.zones_management.ZoneManager;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.maps.android.PolyUtil;
 
 import java.text.SimpleDateFormat;
@@ -51,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Polygon polygon;
     private Circle circle;
     private ZoneManager zoneManager;
-    private Zone[] zones;
+    private ZonePolygon[] zones;
     private SQLiteDatabase db;
 
     @Override
@@ -125,17 +119,17 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void checkDroneGPSCoordinates(LatLng droneLocation){
         boolean inZone = false;
 
-        for(Zone zone : zoneManager.zones){
-            if(!zone.InZone){
+        for(ZonePolygon zonePolygon : zoneManager.zonesPolygon){
+            if(!zonePolygon.InZone){
                 inZone = PolyUtil.containsLocation(droneLocation,
-                        zone.ZonePolygon.getPoints(), false);
+                        zonePolygon.ZonePolygon.getPoints(), false);
                 if(inZone){
-                    zone.InZone = true;
+                    zonePolygon.InZone = true;
                     String inZoneMessage = "Drone is in zone";
                     Toast toast = Toast.makeText(getApplicationContext(),
                             inZoneMessage, Toast.LENGTH_SHORT);
                     toast.show();
-                    registerViolation(zone.Type, zone.Number);
+                    registerViolation(zonePolygon.Type, zonePolygon.Number);
                     break;
                 }
             }
