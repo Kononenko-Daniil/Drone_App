@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dji.importSDKDemo.zones_management.ZoneCircle;
 import com.dji.importSDKDemo.zones_management.ZonePolygon;
 import com.dji.importSDKDemo.zones_management.ZoneManager;
 import com.google.android.gms.maps.GoogleMap;
@@ -118,7 +119,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void checkDroneGPSCoordinates(LatLng droneLocation){
         boolean inZone = false;
-
         for(ZonePolygon zonePolygon : zoneManager.zonesPolygon){
             if(!zonePolygon.InZone){
                 inZone = PolyUtil.containsLocation(droneLocation,
@@ -134,6 +134,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         }
+//        if(!inZone){
+//            for(ZoneCircle zoneCircle : zoneManager.zonesCircle){
+//                if(!zoneCircle.InZone){
+//
+//                    if(inZone){
+//                        zoneCircle.InZone = true;
+//                        do
+//                        String inZoneMessage = "Drone is in zone";
+//                        Toast toast = Toast.makeText(getApplicationContext(),
+//                                inZoneMessage, Toast.LENGTH_SHORT);
+//                        toast.show();
+//                        registerViolation(zoneCircle.Type, zoneCircle.Number);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
     }
 
     public void registerViolation(String zoneType, String zoneNumber){
@@ -176,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             gMap = googleMap;
         }
         zoneManager = new ZoneManager(gMap);
-        zoneManager.setZonesArray();
+        zoneManager.setZoneArrays();
         zoneManager.setZoneStyle();
     }
 
