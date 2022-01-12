@@ -51,7 +51,6 @@
             android:layout_height="match_parent" />
 
     </androidx.cardview.widget.CardView>
-
     <ImageView
         android:id="@+id/view_violations_button"
         android:layout_width="wrap_content"
@@ -62,6 +61,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_name_design"
         app:srcCompat="@drawable/ic_violations" />
+
+    <ImageView
+        android:id="@+id/features_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="32dp"
+        android:onClick="OnButtonClick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_name_design"
+        app:srcCompat="@drawable/ic_features" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
