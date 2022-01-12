@@ -40,22 +40,17 @@ import dji.sdk.products.Aircraft;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Intent intent;
     private GoogleMap gMap;
-    private Handler mHandler;
     private double droneLocationLat = 181, droneLocationLng = 181;
     private double droneLocationAlt = 0;
     private Marker droneMarker = null;
     private FlightController mFlightController;
-    private Polygon polygon;
-    private Circle circle;
     private ZoneManager zoneManager;
-    private ZonePolygon[] zones;
     private SQLiteDatabase db;
     private boolean giveInZoneOnStartAttentionMessage = false;
 
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        unregisterReceiver(mReceiver);
         db.close();
     }
 
@@ -64,9 +59,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(DJIDemoApplication.FLAG_CONNECTION_CHANGE);
-        registerReceiver(mReceiver, filter);
+        initFlightController();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.zones_map);
@@ -77,21 +70,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 "zoneNumber TEXT, " +
                 "date TEXT, " +
                 "time Text)");
-
-        mHandler = new Handler(Looper.getMainLooper());
-    }
-
-    protected BroadcastReceiver mReceiver = new BroadcastReceiver() {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            onProductConnectionChange();
-        }
-    };
-
-    private void onProductConnectionChange()
-    {
-        initFlightController();
     }
 
     private void initFlightController() {
@@ -111,9 +89,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     droneLocationLat = djiFlightControllerCurrentState.getAircraftLocation().getLatitude();
                     droneLocationLng = djiFlightControllerCurrentState.getAircraftLocation().getLongitude();
                     droneLocationAlt = djiFlightControllerCurrentState.getAircraftLocation().getAltitude();
+                    checkDroneAltitude();
                     updateDroneLocation();
                 }
             });
+        }
+    }
+
+    public void checkDroneAltitude(){
+        if(droneLocationAlt > 2){
+            giveInZoneOnStartAttentionMessage = true;
         }
     }
 
