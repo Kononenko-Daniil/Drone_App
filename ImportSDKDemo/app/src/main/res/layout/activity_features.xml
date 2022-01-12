@@ -4,32 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".ViewViolationsActivity">
-
+    tools:context=".FeaturesActivity">
 
     <ImageView
         android:id="@+id/go_back_button"
         android:layout_width="32dp"
         android:layout_height="52dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="81dp"
         android:contentDescription="@string/go_back_button_desc"
         android:onClick="onBackClick"
-        app:layout_constraintEnd_toStartOf="@+id/view_violations_page_name"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view_violations_page_name2"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_go_back_button" />
 
     <TextView
-        android:id="@+id/view_violations_page_name"
-        android:layout_width="274dp"
-        android:layout_height="60dp"
+        android:id="@+id/view_violations_page_name2"
+        android:layout_width="226dp"
+        android:layout_height="62dp"
         android:layout_marginTop="76dp"
         android:fontFamily="@font/montserrat_alternates"
         android:gravity="center"
-        android:text="@string/view_violations_page_name"
+        android:text="@string/features_page_name"
         android:textColor="#000000"
         android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,7 +33,7 @@
 
     <ScrollView
         android:id="@+id/SCROLLER_ID"
-        android:layout_width="360dp"
+        android:layout_width="357dp"
         android:layout_height="495dp"
         android:layout_marginTop="180dp"
         android:fillViewport="true"
@@ -49,11 +44,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/violations"
+            android:id="@+id/features"
             android:layout_width="360dp"
             android:layout_height="445dp"
             android:fontFamily="@font/montserrat_alternates"
-            android:gravity="center_horizontal"
             android:text=""
             android:textColor="#000000"
             android:textSize="16dp"
@@ -64,6 +58,4 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.917" />
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
