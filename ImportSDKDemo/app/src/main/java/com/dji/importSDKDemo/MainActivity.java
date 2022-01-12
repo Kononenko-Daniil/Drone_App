@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap gMap;
     private Handler mHandler;
     private double droneLocationLat = 181, droneLocationLng = 181;
+    private double droneLocationAlt = 0;
     private Marker droneMarker = null;
     private FlightController mFlightController;
     private Polygon polygon;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ZoneManager zoneManager;
     private ZonePolygon[] zones;
     private SQLiteDatabase db;
+    private boolean giveInZoneOnStartAttentionMessage = false;
 
     @Override
     protected void onDestroy(){
@@ -108,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 public void onUpdate(FlightControllerState djiFlightControllerCurrentState) {
                     droneLocationLat = djiFlightControllerCurrentState.getAircraftLocation().getLatitude();
                     droneLocationLng = djiFlightControllerCurrentState.getAircraftLocation().getLongitude();
+                    droneLocationAlt = djiFlightControllerCurrentState.getAircraftLocation().getAltitude();
                     updateDroneLocation();
                 }
             });
@@ -120,18 +123,28 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void checkDroneGPSCoordinates(LatLng droneLocation){
         boolean inZone = false;
+        String inZoneOnStartMessage = "Drone is in zone! Don`t fly higher than 2 meters!";
         for(ZonePolygon zonePolygon : zoneManager.zonesPolygon){
             if(!zonePolygon.InZone){
                 inZone = PolyUtil.containsLocation(droneLocation,
                         zonePolygon.ZonePolygon.getPoints(), false);
                 if(inZone){
-                    zonePolygon.InZone = true;
-                    String inZoneMessage = "Drone is in zone";
-                    Toast toast = Toast.makeText(getApplicationContext(),
-                            inZoneMessage, Toast.LENGTH_SHORT);
-                    toast.show();
-                    registerViolation(zonePolygon.Type, zonePolygon.Number);
-                    break;
+                    if(droneLocationAlt < 2){
+                        if(!giveInZoneOnStartAttentionMessage){
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    inZoneOnStartMessage, Toast.LENGTH_LONG);
+                            toast.show();
+                            giveInZoneOnStartAttentionMessage = true;
+                        }
+                    }else{
+                        zonePolygon.InZone = true;
+                        String inZoneMessage = "Drone is in zone. Register violation.";
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                inZoneMessage, Toast.LENGTH_SHORT);
+                        toast.show();
+                        registerViolation(zonePolygon.Type, zonePolygon.Number);
+                        break;
+                    }
                 }
             }
         }
@@ -148,14 +161,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     if(zoneCircle.ZoneCircle.getRadius() > distanceComputeResults[0])
                         inZone = true;
                     if(inZone){
-                        zoneCircle.InZone = true;
+                        if(droneLocationAlt < 2){
+                            if(!giveInZoneOnStartAttentionMessage){
+                                Toast toast = Toast.makeText(getApplicationContext(),
+                                        inZoneOnStartMessage, Toast.LENGTH_LONG);
+                                toast.show();
+                                giveInZoneOnStartAttentionMessage = true;
+                            }
+                        }else {
+                            zoneCircle.InZone = true;
 
-                        String inZoneMessage = "Drone is in zone";
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                inZoneMessage, Toast.LENGTH_SHORT);
-                        toast.show();
-                        registerViolation(zoneCircle.Type, zoneCircle.Number);
-                        break;
+                            String inZoneMessage = "Drone is in zone. Register violation.";
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    inZoneMessage, Toast.LENGTH_SHORT);
+                            toast.show();
+                            registerViolation(zoneCircle.Type, zoneCircle.Number);
+                            break;
+                        }
                     }
                 }
             }
