@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -134,23 +135,31 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
             }
         }
-//        if(!inZone){
-//            for(ZoneCircle zoneCircle : zoneManager.zonesCircle){
-//                if(!zoneCircle.InZone){
-//
-//                    if(inZone){
-//                        zoneCircle.InZone = true;
-//                        do
-//                        String inZoneMessage = "Drone is in zone";
-//                        Toast toast = Toast.makeText(getApplicationContext(),
-//                                inZoneMessage, Toast.LENGTH_SHORT);
-//                        toast.show();
-//                        registerViolation(zoneCircle.Type, zoneCircle.Number);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
+        if(!inZone){
+            for(ZoneCircle zoneCircle : zoneManager.zonesCircle){
+                if(!zoneCircle.InZone){
+                    float[] distanceComputeResults = new float[1];
+                    LatLng zoneCenter = zoneCircle.ZoneCircle.getCenter();
+                    Location.distanceBetween(zoneCenter.latitude,
+                            zoneCenter.longitude,
+                            droneLocation.latitude,
+                            droneLocation.longitude,
+                            distanceComputeResults);
+                    if(zoneCircle.ZoneCircle.getRadius() > distanceComputeResults[0])
+                        inZone = true;
+                    if(inZone){
+                        zoneCircle.InZone = true;
+
+                        String inZoneMessage = "Drone is in zone";
+                        Toast toast = Toast.makeText(getApplicationContext(),
+                                inZoneMessage, Toast.LENGTH_SHORT);
+                        toast.show();
+                        registerViolation(zoneCircle.Type, zoneCircle.Number);
+                        break;
+                    }
+                }
+            }
+        }
     }
 
     public void registerViolation(String zoneType, String zoneNumber){
