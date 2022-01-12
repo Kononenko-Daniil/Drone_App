@@ -34,6 +34,20 @@ public class ZoneManager {
                                         new LatLng(52.041354,  29.256704))),
                         "RED",
                         "2",
+                        false),
+                new ZonePolygon(
+                        googleMap.addPolygon(new PolygonOptions()
+                                .add(new LatLng(54.000550,27.438888),
+                                        new LatLng(53.977497,27.509998),
+                                        new LatLng(53.925557, 27.594717),
+                                        new LatLng(53.889441, 27.580003),
+                                        new LatLng(53.884995, 27.549162),
+                                        new LatLng(53.903335, 27.524713),
+                                        new LatLng(53.917504, 27.518882),
+                                        new LatLng(53.943613,27.431945),
+                                        new LatLng(53.983608, 27.408050))),
+                        "RED",
+                        "UMP 175",
                         false)
         };
 
