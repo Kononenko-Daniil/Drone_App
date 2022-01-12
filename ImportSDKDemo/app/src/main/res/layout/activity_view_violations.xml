@@ -39,7 +39,7 @@
     <ScrollView
         android:id="@+id/SCROLLER_ID"
         android:layout_width="360dp"
-        android:layout_height="464dp"
+        android:layout_height="495dp"
         android:layout_marginTop="180dp"
         android:fillViewport="true"
         android:scrollbars="vertical"

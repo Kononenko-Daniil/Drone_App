@@ -215,9 +215,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void OnButtonClick(View view){
         switch(view.getId()){
-            case R.id.go_fly_button:
-                intent = new Intent(this, GoFlyActivity.class);
-                break;
             case R.id.view_violations_button:
                 intent = new Intent(this, ViewViolationsActivity.class);
             default:
