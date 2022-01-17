@@ -7,15 +7,13 @@ public class ZonePolygon {
     public Polygon ZonePolygon;
     public String Type;
     public String Number;
-    public boolean InZone;
+    public boolean InZone = false;
 
     public ZonePolygon(Polygon zonePolygon,
                        String type,
-                       String number,
-                       boolean inZone){
+                       String number){
         ZonePolygon = zonePolygon;
         Type = type;
         Number = number;
-        InZone = inZone;
     }
 }

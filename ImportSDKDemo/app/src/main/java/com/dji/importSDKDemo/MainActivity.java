@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(gMap == null){
             gMap = googleMap;
         }
-        zoneManager = new ZoneManager(gMap);
+        zoneManager = new ZoneManager(gMap, this);
         zoneManager.setZoneArrays();
         zoneManager.setZoneStyle();
     }
