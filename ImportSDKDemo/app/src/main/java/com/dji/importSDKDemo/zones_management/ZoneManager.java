@@ -28,8 +28,8 @@ public class ZoneManager {
         zonesPolygon = new ArrayList<ZonePolygon>();
         zonesCircle = new ArrayList<ZoneCircle>();
         JsonZoneParser.googleMap = googleMap;
-        JsonZoneParser.polygonGreyZones = zonesPolygon;
-        JsonZoneParser.circleGreyZones = zonesCircle;
+        JsonZoneParser.polygonZones = zonesPolygon;
+        JsonZoneParser.circleZones = zonesCircle;
         try {
             JsonZoneParser.readZonesJSONFiles(context);
         } catch (IOException e) {

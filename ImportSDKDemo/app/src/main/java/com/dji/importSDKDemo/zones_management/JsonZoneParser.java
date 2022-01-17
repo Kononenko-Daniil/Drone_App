@@ -23,8 +23,8 @@ import java.util.ArrayList;
 
 public class JsonZoneParser {
     public static GoogleMap googleMap;
-    public static ArrayList<ZoneCircle> circleGreyZones;
-    public static ArrayList<ZonePolygon> polygonGreyZones;
+    public static ArrayList<ZoneCircle> circleZones;
+    public static ArrayList<ZonePolygon> polygonZones;
 
     public static void readZonesJSONFiles(Context context) throws IOException, JSONException {
         String jsonTextCircleGrey = readText(context, R.raw.circle);
@@ -38,7 +38,32 @@ public class JsonZoneParser {
         JSONObject jsonRoot = new JSONObject(jsonText);
 
         JSONArray circles = jsonRoot.getJSONArray("circles");
-        for (int i = 0; i < circles.length(); i++) {
+        getZoneCircleAndAddToList(circles, "circles");
+        JSONArray circlesDanger = jsonRoot.getJSONArray("circlesDanger");
+        getZoneCircleAndAddToList(circles, "circlesDanger");
+        JSONArray circlesForbidden = jsonRoot.getJSONArray("circlesForbidden");
+        getZoneCircleAndAddToList(circles, "circlesForbidden");
+    }
+
+    private static void getZoneCircleAndAddToList(JSONArray circles, String zonesType) throws JSONException{
+        int listLength = circles.length();
+        String type;
+        switch(zonesType){
+            case "circles":
+                type = "GREY";
+                break;
+            case "circlesDanger":
+                type = "ORANGE";
+                break;
+            case "circlesForbidden":
+                type = "RED";
+                break;
+            default:
+                type = "";
+                break;
+        }
+
+        for (int i = 0; i < listLength; i++) {
             String zoneNumber = Integer.toString(circles.getJSONObject(i).getInt("id"));
             Double radius = circles.getJSONObject(i).getDouble("radius");
             Double lat = circles.getJSONObject(i).getJSONObject("coordinates").getDouble("lat");
@@ -47,8 +72,8 @@ public class JsonZoneParser {
             Circle circle = googleMap.addCircle(new CircleOptions()
                     .center(new LatLng(lat, lng))
                     .radius(radius * 1000));
-            ZoneCircle zoneCircle = new ZoneCircle(circle, "GREY", zoneNumber);
-            circleGreyZones.add(zoneCircle);
+            ZoneCircle zoneCircle = new ZoneCircle(circle, type, zoneNumber);
+            circleZones.add(zoneCircle);
         }
     }
 
@@ -98,7 +123,7 @@ public class JsonZoneParser {
 
             Polygon polygon = googleMap.addPolygon(polygonOptions);
             ZonePolygon zonePolygon = new ZonePolygon(polygon, type, zoneNumber);
-            polygonGreyZones.add(zonePolygon);
+            polygonZones.add(zonePolygon);
         }
     }
 
