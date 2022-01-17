@@ -40,9 +40,9 @@ public class JsonZoneParser {
         JSONArray circles = jsonRoot.getJSONArray("circles");
         getZoneCircleAndAddToList(circles, "circles");
         JSONArray circlesDanger = jsonRoot.getJSONArray("circlesDanger");
-        getZoneCircleAndAddToList(circles, "circlesDanger");
+        getZoneCircleAndAddToList(circlesDanger, "circlesDanger");
         JSONArray circlesForbidden = jsonRoot.getJSONArray("circlesForbidden");
-        getZoneCircleAndAddToList(circles, "circlesForbidden");
+        getZoneCircleAndAddToList(circlesForbidden, "circlesForbidden");
     }
 
     private static void getZoneCircleAndAddToList(JSONArray circles, String zonesType) throws JSONException{

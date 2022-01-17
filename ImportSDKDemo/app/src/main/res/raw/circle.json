@@ -50,7 +50,7 @@
   {"id": 1003, "radius": 1, "coordinates": {"lat": 53.9002, "lng": 27.5626}},
   {"id": 1004, "radius": 1.5, "coordinates": {"lat": 54.0793, "lng": 27.6871}},
   {"id": 1005, "radius": 2.5, "coordinates": {"lat": 54.2995, "lng": 29.2370}},
-  {"id": 1006, "radius": 9.9, "coordinates": {"lat": 55.6016, "lng": 26.5742 }},
+  {"id": 1006, "radius": 10, "coordinates": {"lat": 55.6016, "lng": 26.5742 }},
   {"id": 1007, "radius": 2.5, "coordinates": {"lat": 53.7864, "lng": 27.6854}},
   {"id": 1008, "radius": 2.5, "coordinates": {"lat": 52.45703889, "lng": 31.54295278}},
   {"id": 1009, "radius": 3.0, "coordinates": {"lat": 52.328333, "lng": 30.371666}},
