@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +56,36 @@ public class JsonZoneParser {
         JSONObject jsonRoot = new JSONObject(jsonText);
 
         JSONArray polygons = jsonRoot.getJSONArray("polygons");
-        for(int i = 0; i < 105; i++){
+        getZonePolygonAndAddToList(polygons, "polygons");
+        JSONArray polygonsDanger = jsonRoot.getJSONArray("polygonsDanger");
+        getZonePolygonAndAddToList(polygonsDanger, "polygonsDanger");
+        JSONArray polygonsForbidden = jsonRoot.getJSONArray("polygonsForbidden");
+        getZonePolygonAndAddToList(polygonsForbidden, "polygonsForbidden");
+    }
+
+    private static void getZonePolygonAndAddToList(JSONArray polygons, String zonesType) throws JSONException {
+        int listLength;
+        String type;
+        switch(zonesType){
+            case "polygons":
+                listLength = 105;
+                type = "GREY";
+                break;
+            case "polygonsDanger":
+                listLength = polygons.length();
+                type = "ORANGE";
+                break;
+            case "polygonsForbidden":
+                listLength = polygons.length();
+                type = "RED";
+                break;
+            default:
+                listLength = 0;
+                type = "";
+                break;
+        }
+
+        for(int i = 0; i < listLength; i++){
             String zoneNumber = Integer.toString(polygons.getJSONObject(i).getInt("id"));
 
             JSONArray coordinates = polygons.getJSONObject(i).getJSONArray("coordinates");
@@ -67,7 +97,7 @@ public class JsonZoneParser {
             }
 
             Polygon polygon = googleMap.addPolygon(polygonOptions);
-            ZonePolygon zonePolygon = new ZonePolygon(polygon, "GREY", zoneNumber);
+            ZonePolygon zonePolygon = new ZonePolygon(polygon, type, zoneNumber);
             polygonGreyZones.add(zonePolygon);
         }
     }
