@@ -1,5 +1,6 @@
 package com.dji.importSDKDemo.zones_management;
 
+import android.content.Context;
 import android.graphics.Color;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -7,66 +8,35 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolygonOptions;
 
-public class ZoneManager {
-    public ZonePolygon[] zonesPolygon;
-    public ZoneCircle[] zonesCircle;
-    public GoogleMap googleMap;
+import org.json.JSONException;
 
-    public ZoneManager(GoogleMap googleMap){
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class ZoneManager {
+    public ArrayList<ZonePolygon> zonesPolygon;
+    public ArrayList<ZoneCircle> zonesCircle;
+    public GoogleMap googleMap;
+    public Context context;
+
+    public ZoneManager(GoogleMap googleMap, Context context) {
         this.googleMap = googleMap;
+        this.context = context;
     }
 
     public void setZoneArrays(){
-        zonesPolygon = new ZonePolygon[]{
-                new ZonePolygon(
-                        googleMap.addPolygon(new PolygonOptions()
-                                .add(new LatLng(52.040351,29.250383),
-                                        new LatLng(52.041945,29.250313),
-                                        new LatLng(52.042195,29.252475),
-                                        new LatLng(52.040549,29.251928))),
-                        "GREY",
-                        "1",
-                        false),
-                new ZonePolygon(
-                        googleMap.addPolygon(new PolygonOptions()
-                                .add(new LatLng(52.040387,29.253845),
-                                        new LatLng(52.041621,  29.254344),
-                                        new LatLng(52.041354,  29.256704))),
-                        "RED",
-                        "2",
-                        false),
-                new ZonePolygon(
-                        googleMap.addPolygon(new PolygonOptions()
-                                .add(new LatLng(54.000550,27.438888),
-                                        new LatLng(53.977497,27.509998),
-                                        new LatLng(53.925557, 27.594717),
-                                        new LatLng(53.889441, 27.580003),
-                                        new LatLng(53.884995, 27.549162),
-                                        new LatLng(53.903335, 27.524713),
-                                        new LatLng(53.917504, 27.518882),
-                                        new LatLng(53.943613,27.431945),
-                                        new LatLng(53.983608, 27.408050))),
-                        "RED",
-                        "UMP 175",
-                        false)
-        };
-
-        zonesCircle = new ZoneCircle[]{
-                new ZoneCircle(
-                        googleMap.addCircle(new CircleOptions()
-                                .center(new LatLng(52.039868, 29.252625))
-                                .radius(40)),
-                        "YELLOW",
-                        "4",
-                        false),
-                new ZoneCircle(
-                        googleMap.addCircle(new CircleOptions()
-                                .center(new LatLng(52.042759, 29.252559))
-                                .radius(40)),
-                        "ORANGE",
-                        "4",
-                        false),
-        };
+        zonesPolygon = new ArrayList<ZonePolygon>();
+        zonesCircle = new ArrayList<ZoneCircle>();
+        JsonZoneParser.googleMap = googleMap;
+        JsonZoneParser.polygonGreyZones = zonesPolygon;
+        JsonZoneParser.circleGreyZones = zonesCircle;
+        try {
+            JsonZoneParser.readZonesJSONFiles(context);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setZoneStyle(){
