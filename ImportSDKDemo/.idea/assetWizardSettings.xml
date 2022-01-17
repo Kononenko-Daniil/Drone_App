@@ -14,8 +14,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_features" />
-                            <entry key="sourceFile" value="D:\Daniil\SPC\Drawable\features.svg" />
+                            <entry key="outputName" value="ic_zones_map" />
+                            <entry key="sourceFile" value="D:\Daniil\SPC\Drawable\zones_map.svg" />
                           </map>
                         </option>
                       </PersistentState>
