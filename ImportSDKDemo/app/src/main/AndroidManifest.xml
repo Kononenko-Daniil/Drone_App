@@ -36,7 +36,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FeaturesActivity"></activity>
+        <activity android:name=".ZonesMapActivity"></activity>
+        <activity android:name=".FeaturesActivity" />
         <activity android:name=".ViewViolationsActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".GoFlyActivity" /> <!-- DJI SDK -->
