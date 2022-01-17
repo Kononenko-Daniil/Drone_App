@@ -23,7 +23,7 @@
         android:layout_width="22dp"
         android:layout_height="38dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="68dp"
         android:contentDescription="@string/go_back_button_desc"
         android:onClick="onBackClick"
         app:layout_constraintEnd_toStartOf="@+id/view_violations_page_name"

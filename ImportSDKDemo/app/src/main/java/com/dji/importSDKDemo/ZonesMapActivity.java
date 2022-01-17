@@ -9,6 +9,7 @@ import android.view.View;
 import com.dji.importSDKDemo.zones_management.ZoneManager;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
 public class ZonesMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap gMap;
@@ -18,6 +19,10 @@ public class ZonesMapActivity extends AppCompatActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zones_map);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.zones_map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
