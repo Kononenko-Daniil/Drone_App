@@ -7,15 +7,13 @@ public class ZoneCircle {
     public Circle ZoneCircle;
     public String Type;
     public String Number;
-    public boolean InZone;
+    public boolean InZone = false;
 
     public ZoneCircle(Circle zoneCircle,
                        String type,
-                       String number,
-                       boolean inZone){
+                       String number){
         ZoneCircle = zoneCircle;
         Type = type;
         Number = number;
-        InZone = inZone;
     }
 }
