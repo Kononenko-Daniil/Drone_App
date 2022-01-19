@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.dji.importSDKDemo.zones_management.ZoneCircle;
 import com.dji.importSDKDemo.zones_management.ZonePolygon;
 import com.dji.importSDKDemo.zones_management.ZoneManager;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -182,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void updateDroneLocation(){
         LatLng pos = new LatLng(droneLocationLat, droneLocationLng);
-        //Create MarkerOptions object
         final MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(pos);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.aircraft));
@@ -198,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     droneMarker = gMap.addMarker(markerOptions);
                     LatLng droneLocation = new LatLng(droneLocationLat, droneLocationLng);
                     checkDroneGPSCoordinates(droneLocation);
+
                 }
             }
         });
@@ -208,6 +209,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(gMap == null){
             gMap = googleMap;
         }
+        LatLng countryCenter = new LatLng(53.896331, 27.565802);
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(countryCenter, 5.5f));
         zoneManager = new ZoneManager(gMap, this);
         zoneManager.setZoneArrays();
         zoneManager.setZoneStyle();
