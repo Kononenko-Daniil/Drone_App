@@ -8,9 +8,9 @@
 
     <TextView
         android:id="@+id/app_name_design"
-        android:layout_width="182dp"
-        android:layout_height="117dp"
-        android:layout_marginTop="212dp"
+        android:layout_width="205dp"
+        android:layout_height="104dp"
+        android:layout_marginTop="196dp"
         android:fontFamily="@font/montserrat_alternates"
         android:gravity="center"
         android:text="@string/app_name_design"
