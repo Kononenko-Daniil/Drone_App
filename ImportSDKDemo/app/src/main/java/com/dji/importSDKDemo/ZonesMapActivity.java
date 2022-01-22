@@ -7,9 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.dji.importSDKDemo.zones_management.ZoneManager;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 public class ZonesMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private GoogleMap gMap;
@@ -30,6 +32,8 @@ public class ZonesMapActivity extends AppCompatActivity implements OnMapReadyCal
         if(gMap == null){
             gMap = googleMap;
         }
+        LatLng countryCenter = new LatLng(53.896331, 27.565802);
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(countryCenter, 6f));
         zoneManager = new ZoneManager(gMap, this);
         zoneManager.setZoneArrays();
         zoneManager.setZoneStyle();

@@ -14,9 +14,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.dji.importSDKDemo.violations_management.Violation;
 import com.dji.importSDKDemo.zones_management.ZoneCircle;
 import com.dji.importSDKDemo.zones_management.ZonePolygon;
 import com.dji.importSDKDemo.zones_management.ZoneManager;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -26,6 +28,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.maps.android.PolyUtil;
 
 import java.text.SimpleDateFormat;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private ZoneManager zoneManager;
     private SQLiteDatabase db;
     private boolean giveInZoneOnStartAttentionMessage = false;
+    private DatabaseReference ref;
 
     @Override
     protected void onDestroy(){
@@ -64,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.zones_map);
         mapFragment.getMapAsync(this);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://droneappdata-default-rtdb.europe-west1.firebasedatabase.app/");
+        ref = database.getReference();
 
         db = getBaseContext().openOrCreateDatabase("droneApp.db", MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS violations (zoneType TEXT, " +
@@ -178,11 +186,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 zoneNumber + "', '" +
                 violationDate + "', '" +
                 violationTime + "')");
+        Violation violation = new Violation(zoneType, zoneNumber, violationDate, violationTime);
+        ref.child("violations").push().setValue(violation);
     }
 
     private void updateDroneLocation(){
         LatLng pos = new LatLng(droneLocationLat, droneLocationLng);
-        //Create MarkerOptions object
         final MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(pos);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.aircraft));
@@ -198,6 +207,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     droneMarker = gMap.addMarker(markerOptions);
                     LatLng droneLocation = new LatLng(droneLocationLat, droneLocationLng);
                     checkDroneGPSCoordinates(droneLocation);
+
                 }
             }
         });
@@ -208,6 +218,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         if(gMap == null){
             gMap = googleMap;
         }
+        LatLng countryCenter = new LatLng(53.896331, 27.565802);
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(countryCenter, 5.5f));
         zoneManager = new ZoneManager(gMap, this);
         zoneManager.setZoneArrays();
         zoneManager.setZoneStyle();
