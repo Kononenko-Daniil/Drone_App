@@ -62,11 +62,11 @@ public class ZoneManager {
         int strokeColor = 0;
         float strokeWidth = 3;
         switch(zoneType){
-            case "RED":
+            case "FORBIDDEN":
                 fillColor = Color.argb(80, 255, 0, 0);
                 strokeColor = Color.argb(220, 255, 0, 0);
                 break;
-            case "ORANGE":
+            case "DANGER":
                 fillColor = Color.argb(80, 255, 138, 0);
                 strokeColor = Color.argb(220, 255, 138, 0);
                 break;
@@ -74,7 +74,7 @@ public class ZoneManager {
                 fillColor = Color.argb(80, 250, 255, 0);
                 strokeColor = Color.argb(220, 250, 255, 0);
                 break;
-            case "GREY":
+            case "BANNED":
                 fillColor = Color.argb(80, 0, 0, 0);
                 strokeColor = Color.argb(220, 0, 0, 0);
                 break;

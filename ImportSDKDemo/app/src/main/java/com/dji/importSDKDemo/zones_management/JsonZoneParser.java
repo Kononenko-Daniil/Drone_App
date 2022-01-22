@@ -50,13 +50,13 @@ public class JsonZoneParser {
         String type;
         switch(zonesType){
             case "circles":
-                type = "GREY";
+                type = "BANNED";
                 break;
             case "circlesDanger":
-                type = "ORANGE";
+                type = "DANGER";
                 break;
             case "circlesForbidden":
-                type = "RED";
+                type = "FORBIDDEN";
                 break;
             default:
                 type = "";
@@ -94,15 +94,15 @@ public class JsonZoneParser {
         switch(zonesType){
             case "polygons":
                 listLength = 105;
-                type = "GREY";
+                type = "BANNED";
                 break;
             case "polygonsDanger":
                 listLength = polygons.length();
-                type = "ORANGE";
+                type = "DANGER";
                 break;
             case "polygonsForbidden":
                 listLength = polygons.length();
-                type = "RED";
+                type = "FORBIDDEN";
                 break;
             default:
                 listLength = 0;

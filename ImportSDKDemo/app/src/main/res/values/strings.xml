@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FlySafe App</string>
+    <string name="app_name">Fly Safe App</string>
     <string name="app_name_design">FLY SAFE APP</string>
     <string name="go_fly_desc">Button for going fly</string>
     <string name="zones_map_desc">Button for opening google
