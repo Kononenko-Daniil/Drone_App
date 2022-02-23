@@ -8,6 +8,7 @@ public class ZonePolygon {
     public String Type;
     public String Number;
     public boolean InZone = false;
+    public boolean Checked = false;
 
     public ZonePolygon(Polygon zonePolygon,
                        String type,

@@ -24,15 +24,19 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
+import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.maps.android.PolyUtil;
+import com.google.maps.android.SphericalUtil;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private SQLiteDatabase db;
     private boolean giveInZoneOnStartAttentionMessage = false;
     private DatabaseReference ref;
+    private boolean isValidZones = false;
 
     @Override
     protected void onDestroy(){
@@ -204,13 +209,73 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
 
                 if (validDroneGPSCoordinates(droneLocationLat, droneLocationLng)) {
-                    droneMarker = gMap.addMarker(markerOptions);
                     LatLng droneLocation = new LatLng(droneLocationLat, droneLocationLng);
+                    if(!isValidZones){
+                        getNeedZones(zoneManager.zonesCircle,
+                                zoneManager.zonesPolygon,
+                                droneLocation);
+                    }
+                    droneMarker = gMap.addMarker(markerOptions);
                     checkDroneGPSCoordinates(droneLocation);
 
                 }
             }
         });
+    }
+
+    private void getNeedZones(ArrayList<ZoneCircle> circleZones,
+                              ArrayList<ZonePolygon> polygonZones,
+                              LatLng droneLocation){
+        //0.1746
+        //0.0876005
+        ArrayList<ZonePolygon> resPolygons = new ArrayList<ZonePolygon>();
+        LatLng leftH = new LatLng(droneLocation.latitude + 0.09,
+                droneLocation.longitude - 0.153);
+        LatLng leftB = new LatLng(droneLocation.latitude - 0.09,
+                droneLocation.longitude - 0.153);
+        LatLng rightH = new LatLng(droneLocation.latitude + 0.09,
+                droneLocation.longitude + 0.153);
+        LatLng rightB = new LatLng(droneLocation.latitude - 0.09,
+                droneLocation.longitude + 0.153);
+        Polygon zoneNeed = gMap.addPolygon(new PolygonOptions()
+                .add(leftH, leftB, rightB, rightH));
+        for(ZonePolygon polygon : polygonZones){
+            boolean inZoneNeed = false;
+            for(LatLng vertex : polygon.ZonePolygon.getPoints()){
+                inZoneNeed = PolyUtil.containsLocation(vertex,
+                        zoneNeed.getPoints(), false);
+            }
+            if(inZoneNeed){
+                resPolygons.add(polygon);
+                polygon.Checked = true;
+            }
+        }
+        for(ZonePolygon polygon : polygonZones){
+            if(!polygon.Checked) {
+                boolean inZoneNeed = false;
+                for (LatLng vertex : zoneNeed.getPoints()) {
+                    inZoneNeed = PolyUtil.containsLocation(vertex,
+                            polygon.ZonePolygon.getPoints(), false);
+                }
+                if (inZoneNeed) {
+                    resPolygons.add(polygon);
+                }
+            }
+        }
+        zoneManager.zonesPolygon = resPolygons;
+
+        Circle circleNeed = gMap.addCircle(new CircleOptions().center(droneLocation).radius(10000));
+        ArrayList<ZoneCircle> resCircles = new ArrayList<ZoneCircle>();
+        for(ZoneCircle circle : circleZones){
+            double distance = SphericalUtil.computeDistanceBetween(droneLocation,
+                    circle.ZoneCircle.getCenter());
+            if(distance < circle.ZoneCircle.getRadius() + 10000){
+                resCircles.add(circle);
+            }
+        }
+        zoneManager.zonesCircle = resCircles;
+        //zoneNeed.remove();
+        //circleNeed.remove();
     }
 
     @Override
@@ -223,6 +288,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         zoneManager = new ZoneManager(gMap, this);
         zoneManager.setZoneArrays();
         zoneManager.setZoneStyle();
+
     }
 
     public void OnButtonClick(View view){
