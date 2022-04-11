@@ -1,4 +1,4 @@
-# CollabPlatform
+# Fly Safe App
 Hi! This is a Fly Safe App repository
 ## What is it?
 Fly Safe App is a special application for Android devices, that allows you to track unauthorized DJI drone flights in areas prohibited for the use of aircraft models.
