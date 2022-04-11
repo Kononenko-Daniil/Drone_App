@@ -2,7 +2,7 @@
 Hi! This is a Fly Safe App repository
 ## What is it?
 Fly Safe App is a special application for Android devices, that allows you to track unauthorized DJI drone flights in areas prohibited for the use of aircraft models.
-Application contains only zones, which are situated in Republic of Belarus.
+Application contains only zones, which are situated in Republic of Belarus
 ## How can you use application?
 
  1. Connect your android device to the DJI drone controller
